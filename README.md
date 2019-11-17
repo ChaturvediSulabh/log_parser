@@ -1,2 +1,3 @@
 # log_parser
-a tool to parse apache logs
+
+A Linux Command line tool to parse apache logs
