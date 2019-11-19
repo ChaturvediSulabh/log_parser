@@ -30,6 +30,17 @@ class FileDialogView < BasicView
     set_cursor
     puts red(center("Please select an Apache log file."))
     log_file.directory.each_with_index do |directory_entry, index|
+
+      if index < log_file.list_start
+        next
+      end
+      if index > log_file.list_start + $stdin.winsize[0] - 3
+        break
+      end
+
+      directory_entry =  directory_entry + "/" if Dir.exist? (log_file.file_path + directory_entry)
+      directory_entry = red(directory_entry) if index == log_file.directory_index
+
       puts directory_entry
     end
     set_cursor $stdin.winsize[0] , 1
