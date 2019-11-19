@@ -4,7 +4,7 @@ class LogParserController
     @current_view = FileDialogView.new
     @current_view.clear_display
     @current_view.set_cursor
-    @current_view.display
+    @current_view.display @log_file
   end
 
   def run
@@ -13,7 +13,8 @@ class LogParserController
         while next_chars = $stdin.read_nonblock(10) do
           user_input = "#{user_input}#{next_chars}"
         end
-      rescue
+      rescue => the_exception
+        the_exception.backtrace
       end
       if @current_view.quittable? && user_input == 'q'
         break
@@ -26,17 +27,17 @@ class LogParserController
   def parse_input user_input
     case user_input
     when "\n"
-      # Do something
+      puts "next line"
     when "\e[A"
-      #  up button
+      puts "up button"
     when "\e[B"
-      # down button
+      puts "down button"
     when "\e[C"
-      # left button
+      puts "right button"
      when "\e[D"
-      # right button
+      puts "left button"
      else
-      # do something
+      puts "do something"
      end
   end
 end

@@ -25,8 +25,15 @@ end
 
 class FileDialogView < BasicView
 
-  def display
-    puts red(center("Please select an apache log file."))
+  def display log_file
+    clear_display
+    set_cursor
+    puts red(center("Please select an Apache log file."))
+    log_file.directory.each_with_index do |directory_entry, index|
+      puts directory_entry
+    end
+    set_cursor $stdin.winsize[0] , 1
+    print red("Type 'q' to exit; up/down to move; return to select")
   end
 
   def quittable?
